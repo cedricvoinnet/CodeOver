@@ -7,13 +7,16 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">CodeOver</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p> Salut mon pote {this.props.name}</p>
+
+        <div className="App-sidebar">
+          <a href="#">HelloWorld</a>
+          <a href="#">Strlen</a>
+          <a href="#">PutChar</a>
+          <a href="#">Count</a>
+
+        </div>
       </div>
     );
   }

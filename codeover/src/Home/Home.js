@@ -9,6 +9,8 @@ export default class Login extends Component {
     this.state = {
       rooms : [],
       room : null,
+      codes : [],
+      code : '',
       name: '',
       description: '',
       language: ''
@@ -16,10 +18,10 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
-    this.refresh();
+    this.refreshRooms();
   }
 
-  refresh = () => {
+  refreshRooms = () => {
     fetch('http://localhost:1212/room', {
       method: 'GET',
       headers: {
@@ -37,11 +39,57 @@ export default class Login extends Component {
     });
   }
 
-  roomSelect = (id) => {
-    this.setState({room:this.state.rooms[id]})
-    console.log(id);
+  refreshCodes = (id) => {
+    fetch('http://localhost:1212/code/'+id, {
+      method:'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'uname': 'ced',
+        'password': 'pass'
+      }
+    })
+    .then((res) => res.json())
+    .then((result) => {
+      for (var i = 0; i < result.data.length; i++) {
+        if (result.data[i].uname === 'ced') {
+          this.setState({code:result.data[i]});
+        } else {
+          this.state.codes.push(result.data[i]);
+        }
+      }
+    }, (error) => {
+      console.log("error");
+    });
   }
 
+  sendCode = () => {
+    fetch('http://localhost:1212/code', {
+      method:'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'uname': 'ced',
+        'password': 'pass'
+      },
+      body: JSON.stringify({
+        room_id: this.state.room.room_id,
+        code: this.state.code
+      })
+    })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log("ok");
+    }, (error) => {
+      console.log("error");
+    });
+  }
+
+  roomSelect = (id) => {
+    this.setState({room:this.state.rooms[id]});
+    this.setState({code: ''});
+    this.refreshCodes(id);
+  }
 
   sendNewRoom = () => {
     fetch('http://localhost:1212/room', {
@@ -62,10 +110,10 @@ export default class Login extends Component {
     .then((res) => res.json())
     .then((result) => {
       console.log("ok");
-      this.refresh();
+      this.refreshRooms();
     }, (error) => {
       console.log("error");
-    })
+    });
   }
 
   validateForm() {
@@ -85,11 +133,11 @@ export default class Login extends Component {
   };
 
   render() {
-    const { rooms, room } = this.state;
+    const { rooms, room, codes, code } = this.state;
     return (
       <div className="Home">
         <div className="Home-sidebar">
-          <Button onClick={this.refresh}>
+          <Button onClick={this.refreshRooms}>
           Refresh
           </Button>
           <ul>
@@ -102,12 +150,45 @@ export default class Login extends Component {
         </div>
         <div className="Home-body">
           {room ? (
-            <div>
-              <h1>{room.name}</h1>
+            <div suppressContentEditableWarning={true}>
               <div>
-                <p>{room.description}</p>
-                <p>{room.language}</p>
-                <p>Created by {room.author}</p>
+                <h1>{room.name}</h1>
+                <div>
+                  <h2>{room.description}</h2>
+                  <h2>{room.language}</h2>
+                  <h2>Created by {room.author}</h2>
+                </div>
+              </div>
+
+              <div className="Code">
+                <p>Enter your code below:</p>
+                <pre>
+                  <code
+                  contentEditable
+                  spellCheck="false"
+                  value={this.state.code}
+                  onChange={this.handleChange}
+                  >
+                  {code.code}
+                  </code>
+                </pre>
+                <Button onClick={this.sendCode}>Send</Button>
+              </div>
+
+              <div className="Code">
+                <p>Here are other users code:</p>
+                {codes.map((code, idx) =>
+                  <div key={idx} className="Code">
+                    <h3>{code.uname}</h3>
+                    <pre>
+                      <code
+                      spellCheck="false"
+                      >
+                        {code.code}
+                      </code>
+                    </pre>
+                  </div>
+                )}
               </div>
             </div>
           ) : (

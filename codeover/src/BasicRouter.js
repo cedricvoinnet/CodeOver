@@ -8,7 +8,7 @@ const BasicRouter = () => (
   <div>
     <Router>
       <div>
-        <Route exact="exact" path="/" component={Home} />
+        <Route exact={true} path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </div>

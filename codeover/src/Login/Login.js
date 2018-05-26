@@ -27,7 +27,7 @@ export default class Login extends Component {
     })
     .then((res) => {
       if (res.status === 200) {
-        this.setState({ url: "/"});
+        this.setState({ url: "/home"});
         this.setState({ redirectToReferrer: true });
       }
     })

@@ -9,8 +9,8 @@ const BasicRouter = ({ store }) => (
   <div>
     <Router>
       <div>
-        <Route exact={true} path="/" render={(props) => <Home {...props} store={store} />} />
-        <Route path="/login" render={(props) => <Login {...props} store={store} />} />
+        <Route path="/(login|)/" render={(props) => <Login {...props} store={store} />} />
+        <Route path="/home" render={(props) => <Home {...props} store={store} />} />
         <Route path="/register" render={(props) => <Register {...props} store="Toto" />} />
       </div>
     </Router>

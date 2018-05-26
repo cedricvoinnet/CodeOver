@@ -25,7 +25,7 @@ export default class Register extends Component {
       })
     })
     .then((res) => {
-      if (res.status === 200) {
+      if (res.status === 201) {
         this.setState({ url: "/"});
         this.setState({ redirectToReferrer: true });
       }

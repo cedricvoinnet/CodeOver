@@ -7,7 +7,6 @@ import "./Home.css";
 export default class Login extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       rooms : [],
       room : null,
@@ -16,7 +15,9 @@ export default class Login extends Component {
       name: '',
       description: '',
       language: ''
-    }
+    };
+    this.uname = 'kev';
+    this.password = 'pass';
   }
 
   componentDidMount() {
@@ -29,8 +30,8 @@ export default class Login extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'uname': 'ced',
-        'password': 'pass'
+        'uname': this.uname,
+        'password': this.password
       }
     })
     .then((res) => res.json())
@@ -47,19 +48,13 @@ export default class Login extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'uname': 'ced',
-        'password': 'pass'
+        'uname': this.uname,
+        'password': this.password
       }
     })
     .then((res) => res.json())
     .then((result) => {
-      for (var i = 0; i < result.data.length; i++) {
-        if (result.data[i].uname === 'ced') {
-          this.setState({code:result.data[i]});
-        } else {
-          this.state.codes.push(result.data[i]);
-        }
-      }
+      this.setState({codes: result.data});
     }, (error) => {
       console.log("error");
     });
@@ -71,8 +66,8 @@ export default class Login extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'uname': 'ced',
-        'password': 'pass'
+        'uname': this.uname,
+        'password': this.password
       },
       body: JSON.stringify({
         room_id: this.state.room.room_id,
@@ -88,7 +83,7 @@ export default class Login extends Component {
   }
 
   roomSelect = (id) => {
-    this.setState({room:this.state.rooms[id]});
+    this.setState({room:this.state.rooms[id - 1]});
     this.setState({code: ''});
     this.refreshCodes(id);
   }
@@ -99,14 +94,14 @@ export default class Login extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'uname': 'ced',
-        'password': 'pass'
+        'uname': this.uname,
+        'password': this.password
       },
       body: JSON.stringify({
         name: this.state.name,
         description: this.state.description,
         language: this.state.language,
-        author: 'ced',
+        author: this.uname,
       })
     })
     .then((res) => res.json())
@@ -151,7 +146,7 @@ export default class Login extends Component {
           </Button>
           <ul>
             {rooms.map((room) =>
-              <li key={room.room_id} onClick={() => this.roomSelect(room.room_id - 1)}>
+              <li key={room.room_id} onClick={() => this.roomSelect(room.room_id)}>
                 {room.name}
               </li>
             )}
@@ -173,8 +168,9 @@ export default class Login extends Component {
                 <p>Enter your code below:</p>
                 <pre>
                   <code
+                  id="code"
                   contentEditable
-                  spellCheck="false"
+                  spellCheck={false}
                   value={this.state.code}
                   onChange={this.handleChange}
                   >

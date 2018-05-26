@@ -13,7 +13,7 @@ export default class Register extends Component {
   }
 
   login = () => {
-    fetch('http://localhost:1212/register', {
+    fetch('https://frozen-escarpment-20946.herokuapp.com/register', {
       method:'POST',
       headers: {
         'Accept': 'application/json',

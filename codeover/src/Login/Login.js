@@ -14,7 +14,7 @@ export default class Login extends Component {
   }
 
   login = () => {
-    fetch('http://localhost:1212/login', {
+    fetch('https://frozen-escarpment-20946.herokuapp.com/login', {
       method:'POST',
       headers: {
         'Accept': 'application/json',

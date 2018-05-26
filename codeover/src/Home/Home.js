@@ -24,7 +24,7 @@ export default class Login extends Component {
   }
 
   refreshRooms = () => {
-    fetch('http://localhost:1212/room', {
+    fetch('https://frozen-escarpment-20946.herokuapp.com/room', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -42,7 +42,7 @@ export default class Login extends Component {
   }
 
   refreshCodes = (id) => {
-    fetch('http://localhost:1212/code/'+id, {
+    fetch('https://frozen-escarpment-20946.herokuapp.com/code/'+id, {
       method:'GET',
       headers: {
         'Accept': 'application/json',
@@ -66,7 +66,7 @@ export default class Login extends Component {
   }
 
   sendCode = () => {
-    fetch('http://localhost:1212/code', {
+    fetch('https://frozen-escarpment-20946.herokuapp.com/code', {
       method:'POST',
       headers: {
         'Accept': 'application/json',
@@ -94,7 +94,7 @@ export default class Login extends Component {
   }
 
   sendNewRoom = () => {
-    fetch('http://localhost:1212/room', {
+    fetch('https://frozen-escarpment-20946.herokuapp.com/room', {
       method:'POST',
       headers: {
         'Accept': 'application/json',

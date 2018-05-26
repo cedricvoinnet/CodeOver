@@ -1,5 +1,7 @@
 # CodeOver
 
+hosted on: https://stark-garden-67955.herokuapp.com/
+
 Projet JavaScript FullStack :
 
 Utilisateur
@@ -10,7 +12,6 @@ Historique des fichiers modifiés
 
 Lobby
 Liste des rooms
-à voir les exigences
 
 Room
 
@@ -28,8 +29,6 @@ func strlen {
 
 
 Nom de fonction = HelloWorld
-Paramètre = 1 - String : name
-Retour de fonction = Int
 Description la fonction compte le nombre de caractère et me renvoi le nombre de
 caractère
 
@@ -37,4 +36,3 @@ caractère
 
 func strlen {
 }
-hosted on: https://stark-garden-67955.herokuapp.com/

@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./Home/Home";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
+import PropTypes from 'prop-types';
 
-const BasicRouter = () => (
+const BasicRouter = ({ store }) => (
   <div>
     <Router>
       <div>
-        <Route exact={true} path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Route exact={true} path="/" render={(props) => <Home {...props} store={store} />} />
+        <Route path="/login" render={(props) => <Login {...props} store={store} />} />
+        <Route path="/register" render={(props) => <Register {...props} store="Toto" />} />
       </div>
     </Router>
   </div>

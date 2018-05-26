@@ -118,6 +118,10 @@ export default class Login extends Component {
     });
   }
 
+  createRoom = () => {
+    this.setState({room:null});
+  }
+
   validateForm() {
     return this.state.name.length > 0 &&
       this.state.description.length > 0 &&
@@ -141,6 +145,9 @@ export default class Login extends Component {
         <div className="Home-sidebar">
           <Button onClick={this.refreshRooms}>
           Refresh
+          </Button>
+          <Button onClick={this.createRoom}>
+          Create a new room
           </Button>
           <ul>
             {rooms.map((room) =>
